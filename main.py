@@ -16,4 +16,7 @@ def initialise_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
 
+    from controllers.cli_controller import db_commands
+    app.register_blueprint(db_commands)
+
     return app
