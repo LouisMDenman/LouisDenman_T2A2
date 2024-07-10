@@ -19,4 +19,7 @@ def initialise_app():
     from controllers.cli_controller import db_commands
     app.register_blueprint(db_commands)
 
+    from controllers.auth_controller import auth
+    app.register_blueprint(auth)
+
     return app
