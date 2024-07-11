@@ -2,6 +2,7 @@ from flask import Blueprint
 
 from init import db, bcrypt
 from models.user import User
+from models.grocery_list import GroceryList
 
 db_commands = Blueprint("db", __name__)
 
@@ -42,6 +43,24 @@ def seed_tables():
     ]
 
     db.session.add_all(users)
+
+    grocery_lists = [
+        GroceryList(
+            list_name = "Housemates grocery list",
+            user = users[0]
+        ),
+        GroceryList(
+            list_name = "Family grocery list",
+            user = users[1]
+        ),
+        GroceryList(
+            list_name = "Groceries",
+            user = users[1]
+        )
+    ]
+
+    db.session.add_all(grocery_lists)
+
     db.session.commit()
 
     print("tables seeded succesfully")
