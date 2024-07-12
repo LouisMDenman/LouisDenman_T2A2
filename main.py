@@ -22,4 +22,7 @@ def initialise_app():
     from controllers.auth_controller import auth
     app.register_blueprint(auth)
 
+    from controllers.grocery_list_controller import grocery_list
+    app.register_blueprint(grocery_list)
+
     return app
