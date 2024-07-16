@@ -3,8 +3,10 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from init import db
 from models.grocery_list import GroceryList, grocery_list_schema, grocery_lists_schema
+from controllers.comment_controller import comments
 
 grocery_list = Blueprint("grocery_lists", __name__)
+grocery_list.register_blueprint(comments)
 
 @grocery_list.route("/grocery_lists")
 def get_grocery_lists():
