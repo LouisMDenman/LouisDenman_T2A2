@@ -18,7 +18,7 @@ def register_user():
         user = User(
             first_name = body_data.get("first_name"),
             last_name = body_data.get("last_name"),
-            display_name = body_data.get("display_name"),
+            display_name = body_data.get("display_name") or f"{body_data.get("first_name")}{body_data.get("last_name")}",
             email = body_data.get("email")
         )
 
