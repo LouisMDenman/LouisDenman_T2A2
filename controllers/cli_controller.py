@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from init import db, bcrypt
+from init import db, bcrypt, TIME
 from models.user import User
 from models.grocery_list import GroceryList
 from models.comment import Comment
@@ -61,6 +61,23 @@ def seed_tables():
     ]
 
     db.session.add_all(grocery_lists)
+
+    comments = [
+        Comment(
+            message = "We are making tacos this week, make sure you grab the spice mix",
+            timestamp = TIME.strftime("%H:%M:%D"),
+            user = users[2],
+            grocery_list = grocery_lists[0]
+        ),
+        Comment(
+            message = "grab apples pls thx",
+            timestamp = TIME.strftime("%H:%M:%D"),
+            user = users[0],
+            grocery_list = grocery_lists[1]
+        )    
+    ]
+
+    db.session.add_all(comments)
 
     db.session.commit()
 

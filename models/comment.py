@@ -6,7 +6,7 @@ class Comment(db.Model):
 
     comment_id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.String, nullable=False)
-    timestamp = db.Column(db.Date)
+    timestamp = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey("grocery_lists.list_id"), nullable=False)
 
