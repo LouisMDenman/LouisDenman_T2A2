@@ -18,7 +18,7 @@ def create_comment(list_id):
             message = body_data.get("message"),
             timestamp = TIME.strftime("%H:%M:%D"),
             grocery_list = grocery_list,
-            user = get_jwt_identity()
+            user_id = get_jwt_identity()
         )
 
         db.session.add(comment)
