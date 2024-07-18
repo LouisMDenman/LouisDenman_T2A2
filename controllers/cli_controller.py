@@ -4,6 +4,7 @@ from init import db, bcrypt, TIME
 from models.user import User
 from models.grocery_list import GroceryList
 from models.comment import Comment
+from models.connection import Connection
 
 db_commands = Blueprint("db", __name__)
 

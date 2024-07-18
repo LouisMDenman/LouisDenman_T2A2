@@ -13,14 +13,16 @@ class User(db.Model):
 
     grocery_list = db.relationship("GroceryList", back_populates="user")
     comments = db.relationship("Comment", back_populates="user")
+    connections = db.relationship("Connection", back_populates="user")
 
 class UserSchema(ma.Schema):
 
     grocery_list = fields.List(fields.Nested("GroceryListSchema"), exclude=["user"])
     comments = fields.List(fields.Nested("CommentSchema", exclude=["user"]))
+    connections = fields.List(fields.Nested("ConnectionSchema", exclude=["user"]))
 
     class Meta:
-        fields = ("user_id", "first_name", "last_name", "display_name", "email", "password", "grocery_list", "comments")
+        fields = ("user_id", "first_name", "last_name", "display_name", "email", "password", "grocery_list", "comments", "connections")
 
 user_schema = UserSchema(exclude=["password"])
 
