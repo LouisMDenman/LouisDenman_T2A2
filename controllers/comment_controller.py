@@ -27,3 +27,29 @@ def create_comment(list_id):
         return comment_schema.dump(comment), 201
     else:
         return {"error": f"Grocery List with list_id '{list_id}' not found"}, 404
+    
+@comments.route("/grocery_list/<int:list_id>/comments/<int:comment_id>", methods=["DELETE"])
+@jwt_required()
+def delete_comment(list_id, comment_id):
+    stmt = db.select(Comment).filter_by(comment_id=comment_id)
+    comment = db.session.scalar(stmt)
+    if comment:
+        db.session.delete(comment)
+        db.session.commit()
+        return {"message": f"Comment '{comment.message}' has been deleted successfully"}
+    else:
+        return {"error": f"Comment with comment_id {comment_id} not found"}, 404
+    
+@comments.route("/grocery_list/<int:list_id>/comments/<int:comment_id>", methods=["PUT", "PATCH"])
+@jwt_required()
+def edit_comment(list_id, comment_id):
+    body_data = request.get_json()
+    stmt = db.select(Comment).filter_by(comment_id=comment_id)
+    comment = db.session.scalar(stmt)
+    if comment:
+        comment.message = body_data.get("message") or comment.message
+        comment.timestamp = TIME.strftime("%H:%M:%D")
+        db.session.commit()
+        return comment_schema.dump(comment)
+    else:
+        return {"error": f"Comment with id '{comment_id}' not found"}, 404
