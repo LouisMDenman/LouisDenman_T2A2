@@ -1,5 +1,6 @@
 from init import db, ma
 from marshmallow import fields
+from sqlalchemy.orm import relationship
 
 class User(db.Model):
     __tablename__ = "users"
@@ -13,7 +14,7 @@ class User(db.Model):
 
     grocery_list = db.relationship("GroceryList", back_populates="user")
     comments = db.relationship("Comment", back_populates="user")
-    connections = db.relationship("Connection", back_populates="user")
+    connections = relationship("Connection", primaryjoin="or_(User.user_id==Connection.friend1_id, User.user_id==Connection.friend2_id)", viewonly=True)
 
 class UserSchema(ma.Schema):
 

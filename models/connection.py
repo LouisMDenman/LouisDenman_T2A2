@@ -9,17 +9,13 @@ class Connection(db.Model):
     friend1_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
     friend2_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
 
-    friend1 = relationship("User", foreign_keys="users.user_id")
-    friend2 = relationship("User", foreign_keys="users.user_id")
-
-    user = db.relationship("User", back_populates="connections")
+    friend1 = relationship("User", foreign_keys=[friend1_id])
+    friend2 = relationship("User", foreign_keys=[friend2_id])
 
 class ConnectionSchema(ma.Schema):
 
-    user = fields.Nested("UserSchema", only=["display_name", "email"])
-
     class Meta:
-        fields = ("id", "friend1_id", "friend2_id", "user")
+        fields = ("id", "friend1_id", "friend2_id")
 
 connection_schema = ConnectionSchema()
 
