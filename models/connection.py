@@ -1,5 +1,4 @@
 from init import db, ma
-from marshmallow import fields
 from sqlalchemy.orm import relationship
 
 class Connection(db.Model):

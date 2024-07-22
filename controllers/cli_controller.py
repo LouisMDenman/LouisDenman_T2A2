@@ -80,6 +80,19 @@ def seed_tables():
 
     db.session.add_all(comments)
 
+    connections = [
+        Connection(
+            friend1_id = "1",
+            friend2_id = "2"
+        ),
+        Connection(
+            friend1_id = "3",
+            friend2_id = "2"
+        )
+    ]
+
+    db.session.add_all(connections)
+
     db.session.commit()
 
     print("tables seeded succesfully")
