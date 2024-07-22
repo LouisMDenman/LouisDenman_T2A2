@@ -5,6 +5,7 @@ from models.user import User
 from models.grocery_list import GroceryList
 from models.comment import Comment
 from models.connection import Connection
+from models.product import Product
 
 db_commands = Blueprint("db", __name__)
 
@@ -92,6 +93,161 @@ def seed_tables():
     ]
 
     db.session.add_all(connections)
+
+    products = [
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Tomato",
+            product_price = 1.5
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Capsicum",
+            product_price = 2
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Apple",
+            product_price = 1
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Banana",
+            product_price = 1.5
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Orange",
+            product_price = 2
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Watermelon",
+            product_price = 4
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Lemon",
+            product_price = 1.7
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Coconut",
+            product_price = 5
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Cucumber",
+            product_price = 1
+        ),
+        Product(
+            product_category = "Fruits & Vegetables",
+            product_name = "Eggplant",
+            product_price = 1.5
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Beef",
+            product_price = 7
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Turkey",
+            product_price = 6.5
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Chicken",
+            product_price = 7
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Pork",
+            product_price = 9
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Bacon",
+            product_price = 7
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Cheddar Cheese",
+            product_price = 4
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Shredded Cheese",
+            product_price = 5
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Light Milk",
+            product_price = 6
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Full Cream Milk",
+            product_price = 5
+        ),
+        Product(
+            product_category = "Meat & Dairy",
+            product_name = "Cottage Cheese",
+            product_price = 3
+        ),
+        Product(
+            product_category = "Carbohydrates",
+            product_name = "White Rice",
+            product_price = 4
+        ),
+        Product(
+            product_category = "Carbohydrates",
+            product_name = "Brown Rice",
+            product_price = 5
+        ),
+        Product(
+            product_category = "Carbohydrates",
+            product_name = "Pasta",
+            product_price = 4
+        ),
+        Product(
+            product_category = "Carbohydrates",
+            product_name = "Bread",
+            product_price = 3
+        ),
+        Product(
+            product_category = "Carbohydrates",
+            product_name = "Tortillas",
+            product_price = 4
+        ),
+        Product(
+            product_category = "Miscellaneous",
+            product_name = "Knife Set",
+            product_price = 10
+        ),
+        Product(
+            product_category = "Miscellaneous",
+            product_name = "Cutting Board",
+            product_price = 8
+        ),
+        Product(
+            product_category = "Miscellaneous",
+            product_name = "Containers",
+            product_price = 15
+        ),
+        Product(
+            product_category = "Miscellaneous",
+            product_name = "Baking Pack",
+            product_price = 20
+        ),
+        Product(
+            product_category = "Miscellaneous",
+            product_name = "Magazine",
+            product_price = 5
+        )
+    ]
+
+    db.session.add_all(products)
 
     db.session.commit()
 
