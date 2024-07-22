@@ -27,4 +27,7 @@ def initialise_app():
     from controllers.grocery_list_controller import grocery_list
     app.register_blueprint(grocery_list)
 
+    from controllers.connection_controller import connections
+    app.register_blueprint(connections)
+
     return app
