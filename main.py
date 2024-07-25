@@ -30,4 +30,7 @@ def initialise_app():
     from controllers.connection_controller import connections
     app.register_blueprint(connections)
 
+    from controllers.product_controller import product
+    app.register_blueprint(product)
+
     return app
