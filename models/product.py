@@ -1,4 +1,5 @@
 from init import db, ma
+from marshmallow import fields
 
 class Product(db.Model):
     __tablename__ = "products"
@@ -8,7 +9,11 @@ class Product(db.Model):
     product_name = db.Column(db.String, nullable=False)
     product_price = db.Column(db.Float, nullable=False)
 
+    productlist = db.relationship("ProductList", back_populates="products")
+
 class ProductSchema(ma.Schema):
+
+    productlist = fields.Nested("ProductListSchema")
 
     class Meta:
         fields = ("product_id", "product_category", "product_name", "product_price")

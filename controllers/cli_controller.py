@@ -6,6 +6,7 @@ from models.grocery_list import GroceryList
 from models.comment import Comment
 from models.connection import Connection
 from models.product import Product
+from models.product_list import ProductList
 
 db_commands = Blueprint("db", __name__)
 
