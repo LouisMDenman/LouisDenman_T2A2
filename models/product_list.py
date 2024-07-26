@@ -14,7 +14,7 @@ class ProductList(db.Model):
 
 class ProductListSchema(ma.Schema):
 
-    products = fields.Nested("ProductSchema")
+    products = fields.Nested("ProductSchema", only=["product_name", "product_price"])
     grocery_list = fields.Nested("GroceryListSchema", only=["list_name"])
 
     class Meta:

@@ -16,10 +16,10 @@ class GroceryListSchema(ma.Schema):
 
     user = fields.Nested("UserSchema", only=["user_id", "display_name", "email"])
     comments = fields.List(fields.Nested("CommentSchema", exclude=["grocery_list"]))
-    product_list = fields.List(fields.Nested("ProductListSchema", exclude=["grocery_list"]))
+    product_list = fields.List(fields.Nested("ProductListSchema", exclude=["grocery_list", "id"]))
 
     class Meta:
-        fields = ("list_id", "list_name", "user", "comments", "product_list")
+        fields = ("list_id", "list_name", "user", "product_list", "comments")
 
 grocery_list_schema = GroceryListSchema()
 grocery_lists_schema = GroceryListSchema(many=True)
