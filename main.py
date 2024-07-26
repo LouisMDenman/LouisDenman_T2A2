@@ -33,4 +33,7 @@ def initialise_app():
     from controllers.product_controller import product
     app.register_blueprint(product)
 
+    from controllers.product_list_controller import product_list
+    app.register_blueprint(product_list)
+
     return app
