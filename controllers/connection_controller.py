@@ -18,32 +18,20 @@ def view_connections():
 def add_connection(friend_id):
     stmt = db.select(Connection)
     friend = db.session.scalars(stmt)
-    connection_exists = False
-
-    print(stmt)
-    print(friend)
 
     for instance in friend:
-        if (instance.friend1_id == get_jwt_identity()) and (instance.friend2_id == friend_id):
-            connection_exists = True
-            break
-        elif (instance.friend1_id == friend_id) and (instance.friend2_id == get_jwt_identity()):
-            connection_exists = True
-            break
+        if (str(instance.friend1_id) == str(get_jwt_identity())) and (str(instance.friend2_id) == str(friend_id)) or (str(instance.friend1_id) == str(friend_id)) and (str(instance.friend2_id) == str(get_jwt_identity())):
+            return {"error": "You are already friends with this user."}, 404
+            
+    new_connection = Connection(
+        friend1_id = get_jwt_identity(),
+        friend2_id = friend_id
+        )
 
-    if not connection_exists:
-        new_connection = Connection(
-            friend1_id = get_jwt_identity(),
-            friend2_id = friend_id
-            )
+    db.session.add(new_connection)
+    db.session.commit()
 
-        db.session.add(new_connection)
-        db.session.commit()
-
-        return connection_schema.dump(new_connection)
-    else:
-        return {"error": "You are already friends with this user."}, 404
-        
+    return connection_schema.dump(new_connection)
 
 @connections.route("/remove_connection/<int:friend_id>", methods=["POST"])
 @jwt_required()
