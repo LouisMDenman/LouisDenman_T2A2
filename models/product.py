@@ -9,11 +9,11 @@ class Product(db.Model):
     product_name = db.Column(db.String, nullable=False)
     product_price = db.Column(db.Float, nullable=False)
 
-    productlist = db.relationship("ProductList", back_populates="products")
+    product_list = db.relationship("ProductList", back_populates="products")
 
 class ProductSchema(ma.Schema):
 
-    productlist = fields.Nested("ProductListSchema")
+    product_list = fields.Nested("ProductListSchema")
 
     class Meta:
         fields = ("product_id", "product_category", "product_name", "product_price")
