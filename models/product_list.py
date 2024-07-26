@@ -14,11 +14,11 @@ class ProductList(db.Model):
 
 class ProductListSchema(ma.Schema):
 
-    product = fields.Nested("ProductSchema")
+    products = fields.Nested("ProductSchema")
     grocery_list = fields.Nested("GroceryListSchema", only=["list_name"])
 
     class Meta:
-        fields = ("id", "products", "quantity", "list_id", "grocery_list")
+        fields = ("id", "products", "quantity", "grocery_list")
 
 product_list_schema = ProductListSchema()
 product_lists_schema = ProductListSchema(many=True)

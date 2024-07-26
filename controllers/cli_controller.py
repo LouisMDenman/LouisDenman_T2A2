@@ -250,6 +250,61 @@ def seed_tables():
 
     db.session.add_all(products)
 
+    product_lists = [
+        ProductList(
+            quantity = 5,
+            products = products[5],
+            grocery_list = grocery_lists[1]
+        ),
+        ProductList(
+            quantity = 3,
+            products = products[8],
+            grocery_list = grocery_lists[1]
+        ),
+        ProductList(
+            quantity = 2,
+            products = products[13],
+            grocery_list = grocery_lists[1]
+        ),
+        ProductList(
+            quantity = 7,
+            products = products[23],
+            grocery_list = grocery_lists[1]
+        ),
+        ProductList(
+            quantity = 1,
+            products = products[29],
+            grocery_list = grocery_lists[1]
+        ),
+        ProductList(
+            quantity = 6,
+            products = products[9],
+            grocery_list = grocery_lists[2]
+        ),
+        ProductList(
+            quantity = 2,
+            products = products[11],
+            grocery_list = grocery_lists[2]
+        ),
+        ProductList(
+            quantity = 6,
+            products = products[19],
+            grocery_list = grocery_lists[2]
+        ),
+        ProductList(
+            quantity = 4,
+            products = products[21],
+            grocery_list = grocery_lists[2]
+        ),
+        ProductList(
+            quantity = 1,
+            products = products[27],
+            grocery_list = grocery_lists[2]
+        )
+    ]
+
+    db.session.add_all(product_lists)
+
     db.session.commit()
 
     print("tables seeded succesfully")
