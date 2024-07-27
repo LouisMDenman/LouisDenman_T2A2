@@ -1,6 +1,7 @@
 from init import db, ma
 from marshmallow import fields
 from sqlalchemy.orm import relationship
+from marshmallow.validate import Regexp
 
 class User(db.Model):
     __tablename__ = "users"
@@ -21,6 +22,10 @@ class UserSchema(ma.Schema):
     grocery_list = fields.List(fields.Nested("GroceryListSchema"), exclude=["user"])
     comments = fields.List(fields.Nested("CommentSchema", exclude=["user"]))
     connections = fields.List(fields.Nested("ConnectionSchema", exclude=["user"]))
+
+    email = fields.String(required=True, validate=Regexp(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", error="Invalid email format."))
+
+    password = fields.String(required=True, validate=Regexp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"), error="Password must be a minimum length of eight characters, and contain at least one letter and number.")
 
     class Meta:
         fields = ("user_id", "first_name", "last_name", "display_name", "email", "password", "grocery_list", "comments", "connections")

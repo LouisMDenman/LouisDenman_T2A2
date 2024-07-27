@@ -1,5 +1,6 @@
 from init import db, ma
 from marshmallow import fields
+from marshmallow.validate import Length, And, Regexp
 
 class GroceryList(db.Model):
     __tablename__ = "grocery_lists"
@@ -17,6 +18,11 @@ class GroceryListSchema(ma.Schema):
     user = fields.Nested("UserSchema", only=["user_id", "display_name", "email"])
     comments = fields.List(fields.Nested("CommentSchema", exclude=["grocery_list"]))
     product_list = fields.List(fields.Nested("ProductListSchema", exclude=["grocery_list"]))
+
+    list_name = fields.String(required=True, validate=And(
+        Length(min=3, error="List name must be a minimum 3 characters long."),
+        Regexp("^[A-Za-z0-9 ]+$", error="Only alphanumeric characters allowed in grocery list names.")
+        ))
 
     class Meta:
         fields = ("list_id", "list_name", "user", "product_list", "comments")

@@ -4,16 +4,16 @@ from flask import Blueprint, request
 from sqlalchemy.exc import IntegrityError
 from psycopg2 import errorcodes
 
-from models.user import User, user_schema
+from models.user import User, user_schema, UserSchema
 from init import bcrypt, db
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
 @auth.route("/register", methods=["POST"])
 def register_user():
     try:
-        body_data = request.get_json()
+        body_data = UserSchema().load(request.get_json())
 
         user = User(
             first_name = body_data.get("first_name"),

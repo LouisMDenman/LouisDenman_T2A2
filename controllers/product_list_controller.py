@@ -41,18 +41,3 @@ def delete_product_list(list_id):
         return grocery_list_schema.dump(grocery_list) 
     else:
         return {"error": f"Grocery List with list_id '{list_id}' not found"}, 404
-    
-@product_list.route("/update_item_quantity/<int:list_id>", methods=["PUT, PATCH"])
-@jwt_required()
-def update_product_list(list_id):
-    body_data = request.get_json()
-    stmt = db.select(GroceryList).filter_by(list_id=list_id)
-    grocery_list = db.session.scalar(stmt)
-    if grocery_list:
-        stmt = db.select(ProductList).filter_by(id=body_data.get("id"))
-        product_list = db.session.scalar(stmt)
-        product_list.quantity = body_data.get("quantity") or product_list.quantity
-        db.session.commit()
-        return grocery_list_schema.dump(grocery_list)
-    else:
-        return {"error": f"Grocery List with list_id '{list_id}' not found"}, 404

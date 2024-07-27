@@ -23,7 +23,7 @@ def one_product(product_id):
     
 @product.route("/custom_product", methods=["POST"])
 def create_product():
-    body_data = request.get_json()
+    body_data = product_schema.load(request.get_json())
     product = Product(
         product_category = body_data.get("product_category"),
         product_name = body_data.get("product_name"),

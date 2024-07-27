@@ -26,7 +26,7 @@ def one_grocery_list(list_id):
 @grocery_list.route("/create_grocery_list", methods=["POST"])
 @jwt_required()
 def create_grocery_list():
-    body_data = request.get_json()
+    body_data = grocery_list_schema.load(request.get_json())
     grocery_list = GroceryList(
         list_name = body_data.get("list_name"),
         user_id = get_jwt_identity()
@@ -52,7 +52,7 @@ def delete_grocery_list(list_id):
 @grocery_list.route("/update_grocery_list_name/<int:list_id>", methods=["PUT", "PATCH"])
 @jwt_required()
 def update_grocery_list(list_id):
-    body_data = request.get_json()
+    body_data = grocery_list_schema.load(request.get_json())
     stmt = db.select(GroceryList).filter_by(list_id=list_id)
     grocery_list = db.session.scalar(stmt)
     if grocery_list:
