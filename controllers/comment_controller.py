@@ -1,8 +1,10 @@
+#Third party imports
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
+#Local application imports
 from init import db, TIME
-from models.comment import Comment, comment_schema, comments_schema
+from models.comment import Comment, comment_schema
 from models.grocery_list import GroceryList
 
 comments = Blueprint("comments", __name__)

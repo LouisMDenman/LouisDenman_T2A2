@@ -1,6 +1,8 @@
-from flask import Blueprint, request
+#Third party imports
+from flask import Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
+#Local application imports
 from init import db
 from models.connection import Connection, connection_schema, connections_schema
 

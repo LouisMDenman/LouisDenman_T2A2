@@ -1,5 +1,7 @@
+#Third party imports
 from flask import Blueprint
 
+#Local application imports
 from init import db, bcrypt, TIME
 from models.user import User
 from models.grocery_list import GroceryList

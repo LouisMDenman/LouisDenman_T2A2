@@ -1,12 +1,15 @@
+#Standard library imports
 from datetime import timedelta
 
+#Third party imports
 from flask import Blueprint, request
 from sqlalchemy.exc import IntegrityError
 from psycopg2 import errorcodes
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
+#Local application imports
 from models.user import User, user_schema, UserSchema
 from init import bcrypt, db
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 

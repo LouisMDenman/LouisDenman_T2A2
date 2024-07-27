@@ -1,25 +1,37 @@
+#Third party imports
 from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
+#Local application imports
 from init import db
 from models.grocery_list import GroceryList, grocery_list_schema, grocery_lists_schema
 from controllers.comment_controller import comments
 
+#Create a Grocery List Blueprint for the app.
 grocery_list = Blueprint("grocery_lists", __name__)
-grocery_list.register_blueprint(comments)
 
+#Route that handles displaying all grocery lists
 @grocery_list.route("/grocery_lists")
 def get_grocery_lists():
+    #Create a statement that will find all grocery lists.
     stmt = db.select(GroceryList)
+    #Retrieve these rows from the database and store them in a variable.
     g_lists = db.session.scalars(stmt)
+    #Return these rows data
     return grocery_lists_schema.dump(g_lists)
 
+#Route that handles viewing a specific grocery list
 @grocery_list.route("/grocery_list/<int:list_id>")
 def one_grocery_list(list_id):
+    #Create a statement that will find a grocery list based on its list_id.
     stmt = db.select(GroceryList).filter_by(list_id=list_id)
+    #Retrieve this row from the database and store it in a variable.
     g_list = db.session.scalar(stmt)
+    #If there is a row that matches the provided list_id.
     if g_list:
+        #Return the specific grocery list
         return grocery_list_schema.dump(g_list)
+    #Otherwise return an error saying that the list cannot be located.
     else:
         return {"error": f"Grocery List with id {list_id} not found"}, 404
     
