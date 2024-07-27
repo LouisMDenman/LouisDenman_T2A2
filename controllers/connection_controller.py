@@ -33,8 +33,19 @@ def add_connection(friend_id):
 
     return connection_schema.dump(new_connection)
 
-@connections.route("/remove_connection/<int:friend_id>", methods=["POST"])
+@connections.route("/remove_connection/<int:friend_id>", methods=["DELETE"])
 @jwt_required()
 def remove_connection(friend_id):
-    pass
+    stmt = db.select(Connection)
+    friend = db.session.scalars(stmt)
+
+    for instance in friend:
+        if (str(instance.friend1_id) == str(get_jwt_identity())) and (str(instance.friend2_id) == str(friend_id)) or (str(instance.friend1_id) == str(friend_id)) and (str(instance.friend2_id) == str(get_jwt_identity())):
+            stmt = db.select(Connection).filter_by(id=instance.id)
+            conn = db.session.scalar(stmt)
+            db.session.delete(conn)
+            db.session.commit()
+            return {"message": "This connection has been removed."}
+
+    return {"error": "You are not connected with this user or the user cannot be found."}, 404
     
