@@ -46,20 +46,25 @@ def register_user():
             return {"error": f"The column {err.orig.diag.column_name} is required"}, 409
         if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
             return {"error": "That email is already in use, please try another email."}, 409
+    except:
+        return {"error": "Sorry, unknown error encounted. Contact the API web server creator if issues persist."}, 404
 
 #Route responsible for logging a user in.
 @auth.route("/login", methods=["POST"])
 def user_login():
-    #Retrieve JSON data.
-    body_data = request.get_json()
-    #Create a statement that will find user based on their email.
-    stmt = db.Select(User).filter_by(email=body_data.get("email"))
-    #Retrieve this row from the database and store it in a variable.
-    user = db.session.scalar(stmt)
-    #If the user exists and the provided password is correct, return a JWT token.
-    if user and bcrypt.check_password_hash(user.password, body_data.get("password")):
-        token = create_access_token(identity=str(user.user_id), expires_delta=timedelta(hours=3))
-        return {"email": user.email, "token": token}
-    #Otherwise return an error.
-    else:
-        return {"error": "Invalid email or password"}, 401
+    try:
+        #Retrieve JSON data.
+        body_data = request.get_json()
+        #Create a statement that will find user based on their email.
+        stmt = db.Select(User).filter_by(email=body_data.get("email"))
+        #Retrieve this row from the database and store it in a variable.
+        user = db.session.scalar(stmt)
+        #If the user exists and the provided password is correct, return a JWT token.
+        if user and bcrypt.check_password_hash(user.password, body_data.get("password")):
+            token = create_access_token(identity=str(user.user_id), expires_delta=timedelta(hours=3))
+            return {"email": user.email, "token": token}
+        #Otherwise return an error.
+        else:
+            return {"error": "Invalid email or password"}, 401
+    except:
+        return {"error": "Sorry, unknown error encounted. Contact the API web server creator if issues persist."}, 404
