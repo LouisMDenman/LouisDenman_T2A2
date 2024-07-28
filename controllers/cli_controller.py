@@ -10,20 +10,30 @@ from models.connection import Connection
 from models.product import Product
 from models.product_list import ProductList
 
+#Create a Database Command Blueprint for the app.
 db_commands = Blueprint("db", __name__)
 
+#CLI command responsible for creating tables in the database.
 @db_commands.cli.command("create")
 def create_tables():
+    #Create all relevant tables specified in app models.
     db.create_all()
+    #Print a confirmation message.
     print("Tables successfully created")
 
+#CLI command responsible for removing tables in the database.
 @db_commands.cli.command("drop")
 def delete_tables():
+    #Remove all relevant tables specified in app models.
     db.drop_all()
+    #Print a confirmation message.
     print("Tables deleted successfully")
 
+#CLI command responsible for seeding data into the tables in the database.
 @db_commands.cli.command("seed")
 def seed_tables():
+
+    #Create a list of sample user data.
     users = [
         User(
             first_name = "Louis",
@@ -48,8 +58,10 @@ def seed_tables():
         )
     ]
 
+    #Add all user rows to the current transaction.
     db.session.add_all(users)
 
+    #Create a list of grocery list sample data.
     grocery_lists = [
         GroceryList(
             list_name = "Housemates grocery list",
@@ -65,8 +77,10 @@ def seed_tables():
         )
     ]
 
+    #Add all grocery list rows to the current transaction.
     db.session.add_all(grocery_lists)
 
+    #Create a list of comment sample data.
     comments = [
         Comment(
             message = "We are making tacos this week, make sure you grab the spice mix",
@@ -82,8 +96,10 @@ def seed_tables():
         )    
     ]
 
+    #Add all comment rows to the current transaction.
     db.session.add_all(comments)
 
+    #Create a list of connection sample data.
     connections = [
         Connection(
             friend1_id = "1",
@@ -95,8 +111,10 @@ def seed_tables():
         )
     ]
 
+    #Add all connection rows to the current transaction.
     db.session.add_all(connections)
 
+    #Create a list of product sample data.
     products = [
         Product(
             product_category = "Fruits & Vegetables",
@@ -250,8 +268,10 @@ def seed_tables():
         )
     ]
 
+    #Add all product rows to the current transaction.
     db.session.add_all(products)
 
+    #Create a list of product list sample data.
     product_lists = [
         ProductList(
             quantity = 5,
@@ -305,8 +325,11 @@ def seed_tables():
         )
     ]
 
+    #Add all product list rows to the current transaction.
     db.session.add_all(product_lists)
 
+    #Commit all rows to the database.
     db.session.commit()
 
+    #Print confirmation message.
     print("tables seeded succesfully")
